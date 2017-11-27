@@ -1,0 +1,6 @@
+{
+  "name": "Bot guided by ontologies",
+  "description": "A bot for a class guided by ontologies.",
+  "image": "heroku/gradle",
+  "addons": [ ]
+}

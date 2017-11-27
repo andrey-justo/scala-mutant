@@ -1,0 +1,29 @@
+/******************************************************************************
+ * DEPENDENCIES                                                               *
+ ******************************************************************************/
+dependencies {
+
+    // APACHE HTTP COMPONENTS
+    compile "org.apache.httpcomponents:httpclient:4.5+"
+    compile "org.apache.httpcomponents:httpmime:4.5+"
+    
+    // APACHE
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+        
+    // JSON PARSER
+	compile group: 'org.json4s', name: 'json4s-jackson_2.12', version: '3.6.0-M1'
+    
+    // COMMONS
+    compile 'commons-collections:commons-collections:3.2.1'
+    
+    // SPRING
+    compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    compile "org.springframework.data:spring-data-mongodb:${springDataMongo}"
+    
+    // LOG
+	compile "com.typesafe.scala-logging:scala-logging_2.12:3.7.2"
+    
+	// TESTES
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.4.RELEASE'
+    testCompile 'junit:junit:4.12'
+}

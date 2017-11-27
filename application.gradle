@@ -1,0 +1,35 @@
+/******************************************************************************
+ * INITIALIZATION                                                             *
+ ******************************************************************************/
+task doBeforeCompile {
+        println("---> Building application ${project.name}")
+        println("---> Scala Compiler: ${scalaCompiler}")
+        println('---> Compiler args: ' + compileJava.options.compilerArgs)
+        println("---> Environment: ${project.ext.environment}")
+        println("---> Version: ${version}")
+        println("---> Release: ${project.release}\n")
+}
+
+compileScala.dependsOn doBeforeCompile
+compileJava.dependsOn doBeforeCompile
+
+/******************************************************************************
+ * DEPLOY CONFIGURATION                                                       *
+ ******************************************************************************/
+apply from: '../deploy.gradle'
+
+/******************************************************************************
+ * RELEASE PLUGIN                                                             *
+ ******************************************************************************/
+
+release {
+    tagTemplate = '${version}-' + "${serviceTag}"
+    buildTasks = ['releaseApplication']
+	git {		
+		requireBranch = (project.ext.environment == "prod") ? '' : 'dev'
+	}		
+}
+
+task releaseApplication {
+    dependsOn(":" + project.name + ":build")
+}

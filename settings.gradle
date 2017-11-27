@@ -1,0 +1,4 @@
+rootProject.name = 'scala-mutant'
+
+include 'scala-mutant-rest'
+include 'scala-mutant-core'
