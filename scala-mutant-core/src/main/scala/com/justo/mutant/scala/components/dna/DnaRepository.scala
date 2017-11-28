@@ -1,14 +1,15 @@
 package com.justo.mutant.scala.components.dna
 
-import com.justo.mutant.scala.configuration.log._
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.Criteria
+import org.springframework.data.mongodb.core.MongoTemplate
+import com.justo.mutant.scala.configuration.log._
 
-class DnaRepositoryImpl(val template: MongoTemplate) {
+class DnaRepository(val template: MongoTemplate) {
 
-  private val DnaCollectionName = s"dna"
+  private val DnaCollectionName = "dna"
 
   def countByMutant(isMutant: Boolean): Long = {
     val query = new Query(Criteria.where("mutant").is(isMutant))
