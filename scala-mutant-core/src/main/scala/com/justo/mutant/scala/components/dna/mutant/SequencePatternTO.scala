@@ -2,7 +2,7 @@ package com.justo.mutant.scala.components.dna.mutant
 
 import java.util.regex.Pattern
 
-class SequencePatternTO(val validChars: Array[String] = Array[String]("T", "C", "G", "A"), val seqSize: Long = 4, val minSeqs: Long = 2) extends SequencePattern {
+case class SequencePatternTO(val validChars: Array[String] = Array[String]("T", "C", "G", "A"), val seqSize: Long = 4, val minSeqs: Long = 2) extends SequencePattern {
 
   def pattern = Pattern.compile("[^" + validChars.mkString("") + "]")
 
