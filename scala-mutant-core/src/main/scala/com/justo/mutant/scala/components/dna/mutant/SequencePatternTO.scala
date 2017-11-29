@@ -7,7 +7,7 @@ case class SequencePatternTO(val validChars: Array[String] = Array[String]("T", 
   def pattern = Pattern.compile("[^" + validChars.mkString("") + "]")
 
   def validate(dna: Array[String]): Boolean = dna match {
-    case dna if dna.length > 0 => dna.map(line => validate(line, dna.length)).exists(validation => !validation)
+    case dna if dna.length > 0 => !dna.map(line => validate(line, dna.length)).exists(validation => !validation)
     case _ => return false
   }
 
