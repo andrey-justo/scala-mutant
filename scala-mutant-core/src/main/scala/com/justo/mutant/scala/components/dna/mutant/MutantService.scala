@@ -14,14 +14,13 @@ class MutantService(dnaStr: Option[Array[String]], sequencePattern: SequencePatt
   //TODO: try to use a big regex
   private def mutation(): Boolean = {
     val cols = dnaStr.get.head.length()
-    val entireDna = dnaStr.mkString("")
+    val entireDna = dnaStr.get.mkString("")
     
     @volatile var nMutations = 0
     entireDna.zipWithIndex.foreach { case (c, i) =>
       nMutations = nMutations + matching(entireDna, i, cols, (x) => x + 1, stopRow)
       nMutations = nMutations + matching(entireDna, i, cols, (x) => x + cols, stopCol)
-      nMutations = nMutations + matching(entireDna, i, cols, (x) => x + cols + 1, (s, cols, size) => false)
-      println(s"mutations: $nMutations")
+      nMutations = nMutations + matching(entireDna, i, cols, (x) => x + cols + 1, stopRow)
       if (nMutations >= sequencePattern.minSeqs) {
         return true
       }
@@ -31,6 +30,7 @@ class MutantService(dnaStr: Option[Array[String]], sequencePattern: SequencePatt
   }
   
   private def matching(data: String, start:Int, cols: Int, skipFunc: Int => Int, stopCondition: (Int, Int, Int) => Boolean): Int = {
+    val size = data.length()
     if (stopCondition(start, cols, data.length())) {
       return 0
     }
@@ -38,16 +38,17 @@ class MutantService(dnaStr: Option[Array[String]], sequencePattern: SequencePatt
     @volatile var position = start
     (0 to sequencePattern.minSeqs.toInt).foreach { case (i) =>
       @volatile var newPosition = skipFunc(position)
-      println(s"comparing $position with $newPosition for $stopCondition")
       if (newPosition >= data.length() || data(position) != data(newPosition)) {
         return 0
       }
+      
+      position = newPosition
     }
     
     return 1
   }
   
-  private def stopRow(p: Int, cols: Int, size: Int): Boolean = (p % cols) < sequencePattern.minSeqs.toInt
-  private def stopCol(p: Int, cols: Int, size: Int): Boolean = (p * cols) >= size 
+  private def stopRow(p: Int, cols: Int, size: Int): Boolean = p % cols - sequencePattern.seqSize.toInt > 0
+  private def stopCol(p: Int, cols: Int, size: Int): Boolean = (p + 1) * cols >= size 
   
 }

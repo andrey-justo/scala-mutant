@@ -8,3 +8,5 @@ build/
 .classpath
 .project
 *.cache-tests
+*.cache-main
+./scala-mutant-core/.cache-main
