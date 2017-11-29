@@ -9,7 +9,7 @@ class DnaService(val repository: DnaRepository) {
     Stats(repository.countByMutant(true), repository.countByMutant(false))
   }
   
-  def insert(dna: Array[String], mutant: Boolean): Dna = {
+  def insert(dna: Array[String], mutant: Boolean): Option[Dna] = {
     repository.insert(Dna(dna, mutant))
   }
   

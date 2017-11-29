@@ -1,5 +1,6 @@
 package com.justo.mutant.scala.components.dna
 
+import scala.util._
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Query
@@ -16,14 +17,12 @@ class DnaRepository(val template: MongoTemplate) {
     template.count(query, DnaCollectionName)
   }
 
-  def insert(dnaObject: Dna): Dna = {
-    try {
-      template.insert(dnaObject, DnaCollectionName)
-    } catch {
-      case duplicatedException: DuplicateKeyException => log.Data.error("This Dna have been already checked", duplicatedException)
+  def insert(dnaObject: Dna): Option[Dna] = {
+    
+    Try(template.insert(dnaObject, DnaCollectionName)) match {
+      case Success(dna) => Some(dnaObject)
+      case Failure(e) => log.Data.error("Something really bad happened.", e); None
     }
-
-    dnaObject
   }
 
 }
