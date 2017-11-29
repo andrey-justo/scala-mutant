@@ -35,7 +35,7 @@ class MutantService(dnaStr: Option[Array[String]], sequencePattern: SequencePatt
     }
     
     @volatile var position = start
-    (0 to sequencePattern.minSeqs.toInt).map { case (i) =>
+    (0 to sequencePattern.minSeqs.toInt).foreach { case (i) =>
       @volatile var newPosition = skipFunc(position)
       if (newPosition >= data.length() || data(position) != data(newPosition)) {
         return 0
