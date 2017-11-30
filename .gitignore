@@ -6,6 +6,7 @@
 */.gradle/*
 build/
 .classpath
+*/.classpath
 .project
 *.cache-tests
 *.cache-main
