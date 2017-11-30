@@ -2,19 +2,19 @@ package com.justo.mutant.scala.components.dna.mutant
 
 import com.justo.mutant.scala.components.dna.Dna
 
-class MutantService(dnaStr: Option[Array[String]], sequencePattern: SequencePattern) {
+class MutantService(sequencePattern: SequencePattern = SequencePatternTO()) {
 
-  def hasMutation(): Dna = {
+  def hasMutation(dnaStr: Option[Array[String]]): Dna = {
     dnaStr match {
-      case dnaStr if dnaStr.isDefined && sequencePattern.validate(dnaStr.get) => Dna(dnaStr.get, mutation())
+      case dnaStr if dnaStr.isDefined && sequencePattern.validate(dnaStr.get) => Dna(dnaStr.get, mutation(dnaStr.get))
       case _ => throw new IllegalArgumentException("Dna String should be an square array")
     }
   }
 
   //TODO: try to use a big regex
-  private def mutation(): Boolean = {
-    val cols = dnaStr.get.head.length()
-    val entireDna = dnaStr.get.mkString("")
+  private def mutation(dnaStr: Array[String]): Boolean = {
+    val cols = dnaStr.head.length()
+    val entireDna = dnaStr.mkString("")
 
     @volatile var nMutations = 0
     (0 to entireDna.length() - 1).foreach { i =>

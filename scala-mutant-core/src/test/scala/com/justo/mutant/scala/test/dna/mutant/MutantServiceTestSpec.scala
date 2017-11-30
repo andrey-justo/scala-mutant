@@ -10,7 +10,7 @@ import org.scalatest.junit.JUnitRunner
 
 class MutantServiceTestSpec extends MainTestSpec with Matchers {
 
-  private val seqPattern = SequencePatternTO()
+  private val mutantService = new MutantService()
 
   private def generateDNA(beginFrame: Array[String], endFrame: Array[String], iterations: Int): Array[String] = (beginFrame, endFrame, iterations) match {
     case (b, e, i) if e.length >= i && e(0).size >= i => return e
@@ -39,44 +39,38 @@ class MutantServiceTestSpec extends MainTestSpec with Matchers {
 
   "Mutant dna" should " be a mutant" in {
     val dnaStr = Array("ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(true)
   }
 
   "Mutant dna 2" should " be a mutant" in {
     val dnaStr = Array("ATGCGA", "CAGTGC", "TTATGT", "AGTCGG", "CCCTTA", "TCACTG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(true)
   }
 
   "Mutant dna 3" should " be a mutant" in {
     val dnaStr = Array("AGGCGA", "CAGGGC", "TTATGT", "AGGCGG", "CCCTTA", "TCACTG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(true)
   }
 
   "Mutant dna 4" should " be a mutant" in {
     val dnaStr = Array("ATGCGAATGCGA", "CAGTGCATACGC", "TTATGTATGCGA", "AGTCGGATACGC", "CCCTTAATGCGA", "CAGTTAATACGC", "CCCGTAATGCGA", "CAGTACCTGCGC",
       "CCCTTAATACGA", "CACGTACTGCGC", "CCCTCAATACGA", "TCACTGATGCGA")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(true)
   }
 
   "Mutant dna with inverted diagonal" should " not be a mutant" in {
     val dnaStr = Array("ATGCGA", "CCGCGC", "TTCTGT", "ACAAGG", "CCTCTA", "TCACTG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(false)
   }
 
   "Mutant dna with diagonal" should " be a mutant" in {
     val dnaStr = Array("ATGCTA", "CCGGGC", "TTCTGT", "ATAAGG", "CCTCTA", "TCATTG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(true)
   }
 
@@ -93,73 +87,67 @@ class MutantServiceTestSpec extends MainTestSpec with Matchers {
       "AGAAGGAGAAGGAGAAGGAGAAGGAGAAGGAGAAGG", "CCCCTACCCCTACCCCTACCCCTACCCCTACCCCTA", "AGAAGGAGAAGGAGAAGGAGAAGGAGAAGGAGAAGG",
       "CCCCTACCCCTACCCCTACCCCTACCCCTACCCCTA", "AGAAGGAGAAGGAGAAGGAGAAGGAGAAGGAGAAGG", "CCCCTACCCCTACCCCTACCCCTACCCCTACCCCTA",
       "AGAAGGAGAAGGAGAAGGAGAAGGAGAAGGAGAAGG", "CCCCTACCCCTACCCCTACCCCTACCCCTACCCCTA", "TCACTGTCACTGTCACTGTCACTGTCACTGTCACTG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(true)
   }
 
   "Not a mutant test" should "be a normal person" in {
     val dnaStr = Array("ACGCG", "TCTAG", "GCACC", "TATAG", "GCGCG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(false)
   }
 
   behavior of "Not a valid dna"
   it should "throw an exception" in {
     val dnaStr = Array("ACGCG", "TCTA", "GCACC", "TAG", "GCGCG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
     intercept[IllegalArgumentException] {
-      mutantService.hasMutation()
+      mutantService.hasMutation(Some(dnaStr))
     }
   }
 
   it should "2 throw an exception" in {
     val dnaStr = Array("ACGCG", "TCTAB", "GCACC", "TAGYY", "GCGCG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
     intercept[IllegalArgumentException] {
-      mutantService.hasMutation()
+      val dna = mutantService.hasMutation(Some(dnaStr))
     }
   }
 
   it should "3 throw an exception" in {
     val dnaStr = Array("", "TCTAG", "GCACC", "TATAG", "GCGCG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
     intercept[IllegalArgumentException] {
-      mutantService.hasMutation()
+      val dna = mutantService.hasMutation(Some(dnaStr))
     }
   }
 
   it should "4 throw an exception" in {
     val dnaStr = Array("TCTAG", "GCACC", "TATAG", "GCGCG")
-    val mutantService = new MutantService(Some(dnaStr), seqPattern)
     intercept[IllegalArgumentException] {
-      mutantService.hasMutation()
+      val dna = mutantService.hasMutation(Some(dnaStr))
     }
   }
 
   behavior of "Worst case"
   it should "not be a mutant" in {
-    val mutantService = new MutantService(Some(generateDNA(Array("AT", "CG"), Array("ACGCG", "TATAG", "GCCCT", "TATAG", "GCGCG"), 12)), seqPattern)
-    val dna = mutantService.hasMutation()
+    val dnaStr = generateDNA(Array("AT", "CG"), Array("ACGCG", "TATAG", "GCCCT", "TATAG", "GCGCG"), 12)
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(false)
   }
 
   it should "be a mutant" in {
-    val mutantService = new MutantService(Some(generateDNA(Array("AT", "CG"), Array("ACGCG", "TATAG", "GCACG", "TATAG", "GCGCG"), 12)), seqPattern)
-    val dna = mutantService.hasMutation()
-    dna.mutant should be(true)
-  }
-
-  it should "2 be a mutant" in {
-    val mutantService = new MutantService(Some(generateDNA(Array("AT", "CG"), Array(
+    val dnaStr = generateDNA(Array("AT", "CG"), Array(
       "ACCGCG",
       "AACGCG",
       "TCTCAT",
       "GGCACG",
       "ATACAG",
-      "AGCGCG"), 12)), seqPattern)
-    val dna = mutantService.hasMutation()
+      "AGCGCG"), 12)
+    val dna = mutantService.hasMutation(Some(dnaStr))
+    dna.mutant should be(true)
+  }
+
+  it should "2 be a mutant" in {
+    val dnaStr = generateDNA(Array("AT", "CG"), Array("ACGCG", "TATAG", "GCCCT", "TATAG", "GCGCG"), 12)
+    val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(true)
   }
 

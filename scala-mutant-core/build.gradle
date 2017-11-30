@@ -17,6 +17,8 @@ dependencies {
     compile 'commons-collections:commons-collections:3.2.1'
     
     // SPRING
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     compile "org.springframework.data:spring-data-mongodb:${springDataMongo}"
     
@@ -24,5 +26,6 @@ dependencies {
 	compile "com.typesafe.scala-logging:scala-logging_2.11:3.7.2"
     
 	// TESTES
-	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.4.RELEASE'
+	testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+	testCompile group: "de.flapdoodle.embed", name: "de.flapdoodle.embed.mongo", version: "2.0.0"
 }
