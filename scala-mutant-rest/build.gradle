@@ -13,7 +13,6 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'net.researchgate.release'
 apply plugin: 'nebula.rpm'
 
-//mainClassName="com.social.enactive.main.SocialEnactiveMain"
 apply from: '../application.gradle'
 
 /******************************************************************************
@@ -21,26 +20,13 @@ apply from: '../application.gradle'
  ******************************************************************************/
 dependencies {
 
-	project(":scala-mutant-core")
+	compile project(":scala-mutant-core")
 
     // SPRING
     compile "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-starter-freemarker:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}"
-    
-    // ACTIVEMQ
-    compile group: 'org.apache.activemq', name: 'activemq-stomp', version: '5.15.2'
-    compile group: 'org.apache.activemq', name: 'activemq-kahadb-store', version: '5.15.2'
-    
-    // WEBSOCKET
-    compile "org.webjars:webjars-locator"
-    compile "org.webjars:sockjs-client:1.0.2"
-    compile "org.webjars:stomp-websocket:2.3.3"
-    compile "org.webjars:bootstrap:3.3.7"
-    compile "org.webjars:jquery:3.1.0"
+	compile "org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}"
+	compile "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
     
 }

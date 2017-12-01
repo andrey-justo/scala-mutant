@@ -1,0 +1,48 @@
+server:
+    port: 8082
+    error:
+        whitelabel:
+            enabled: false
+    undertow:
+        accesslog:
+            enabled: true
+            pattern: '%t %a "%r" %s (%D ms)'
+
+endpoints:
+    enabled: false
+    info:
+        enabled: true
+    health:
+        enabled: true
+      
+
+spring:
+    jmx:
+        enabled: true
+    data:
+        mongodb:
+            uri: mongodb://andrey.justo:mutant_test@ds053126.mlab.com:53126/heroku_1fccdwbd
+
+---
+
+spring:
+    profiles: test
+
+---
+
+spring:
+    profiles: stag
+
+sentry:
+    dns: "${sentry-path}"
+
+---
+
+spring:
+    profiles: prod
+
+ehcache:
+    heap-size: 512
+
+sentry:
+    dns: "${sentry-path}"

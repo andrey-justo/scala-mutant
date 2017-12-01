@@ -10,4 +10,5 @@ build/
 .project
 *.cache-tests
 *.cache-main
+*/bin/*
 ./scala-mutant-core/.cache-main
