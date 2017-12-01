@@ -10,7 +10,7 @@ class DnaService(val repository: DnaRepository) {
   }
   
   def insert(dna: Array[String], mutant: Boolean): Option[Dna] = {
-    repository.insert(Dna(dna, mutant))
+    repository.insert(Dna(dna.mkString(""), mutant))
   }
   
 }

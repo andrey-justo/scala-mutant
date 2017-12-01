@@ -18,7 +18,6 @@ class DnaRepository(val template: MongoTemplate) {
   }
 
   def insert(dnaObject: Dna): Option[Dna] = {
-    
     Try(template.insert(dnaObject, DnaCollectionName)) match {
       case Success(dna) => Some(dnaObject)
       case Failure(e) => log.Data.error("Something really bad happened.", e); None

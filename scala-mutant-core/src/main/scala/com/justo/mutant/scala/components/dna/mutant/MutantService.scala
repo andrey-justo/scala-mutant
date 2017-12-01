@@ -6,7 +6,7 @@ class MutantService(sequencePattern: SequencePattern = SequencePatternTO()) {
 
   def hasMutation(dnaStr: Option[Array[String]]): Dna = {
     dnaStr match {
-      case dnaStr if dnaStr.isDefined && sequencePattern.validate(dnaStr.get) => Dna(dnaStr.get, mutation(dnaStr.get))
+      case dnaStr if dnaStr.isDefined && sequencePattern.validate(dnaStr.get) => Dna(dnaStr.get.mkString(""), mutation(dnaStr.get))
       case _ => throw new IllegalArgumentException("Dna String should be an square array")
     }
   }
@@ -31,7 +31,6 @@ class MutantService(sequencePattern: SequencePattern = SequencePatternTO()) {
 
   private def matching(data: String, start: Int, cols: Int, jump: Int => Int, stopCondition: (Int, Int, Int) => Boolean): Int = {
     if (stopCondition(start, cols, data.length())) {
-      println("Paro:" + start + stopCondition)
       return 0
     }
 
@@ -42,12 +41,10 @@ class MutantService(sequencePattern: SequencePattern = SequencePatternTO()) {
         position = newPosition
         newPosition = jump(position)
         if (newPosition >= data.length() || data(position) != data(newPosition)) {
-          println("Eita:" + start + " " + position + " " + newPosition)
           return 0
         }
     }
 
-    println("Nooo:" + data(position) + " " + data(newPosition))
     return 1
   }
 

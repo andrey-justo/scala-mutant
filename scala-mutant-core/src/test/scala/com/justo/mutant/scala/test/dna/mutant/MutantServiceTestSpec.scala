@@ -146,7 +146,7 @@ class MutantServiceTestSpec extends MainTestSpec with Matchers {
   }
 
   it should "2 be a mutant" in {
-    val dnaStr = generateDNA(Array("AT", "CG"), Array("ACGCG", "TATAG", "GCCCT", "TATAG", "GCGCG"), 12)
+    val dnaStr = generateDNA(Array("AT", "CG"), Array("ACCGCG", "AACGCG", "TCTCAT", "GGCACG", "ATACAG", "AGCGCG"), 12)
     val dna = mutantService.hasMutation(Some(dnaStr))
     dna.mutant should be(true)
   }

@@ -1,5 +1,7 @@
 package com.justo.mutant.scala.components.dna
 
-case class Dna(stringChars: Array[String], mutant: Boolean) {
+import org.springframework.data.annotation.Id;
+
+case class Dna(@Id id: String, mutant: Boolean) {
     
 }

@@ -13,10 +13,9 @@ import de.flapdoodle.embed.mongo.config.IMongodConfig
 import com.mongodb.MongoClient
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.beans.factory.annotation.Autowired
-import javax.annotation.PreDestroy
 
 object MongoConfigurationTest {
-  private val DbName = "mutant_tests"
+  val DbName = "mutant_tests"
 }
 
 @Configuration
@@ -29,6 +28,6 @@ class MongoConfigurationTest {
   @Bean def mongo(): MongoClient = { new MongoClient() }
   
   @Autowired
-  @Bean def mongoTemplate(mongo: MongoClient): MongoTemplate = { new MongoTemplate(mongo, MongoConfigurationTest.DbName)}
- 
+  @Bean def mongoTemplate(mongo: MongoClient): MongoTemplate = { new MongoTemplate(mongo, MongoConfigurationTest.DbName)} 
+  
 }
