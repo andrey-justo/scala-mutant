@@ -7,4 +7,5 @@ object log {
   val System = Logger("system")
   val Data = Logger("data")
   val Requests = Logger("requests")
+  val Exceptions = Logger("exceptions")
 }

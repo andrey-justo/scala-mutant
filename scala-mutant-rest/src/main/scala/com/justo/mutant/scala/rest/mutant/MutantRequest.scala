@@ -1,3 +1,5 @@
 package com.justo.mutant.scala.rest.mutant
 
-case class MutantRequest(val dna: Array[String]) {}
+import com.fasterxml.jackson.annotation.JsonProperty
+
+case class MutantRequest(@JsonProperty val dna: Array[String]) {}

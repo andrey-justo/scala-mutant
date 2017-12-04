@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.beans.factory.annotation.Autowired
 import com.justo.mutant.scala.components.dna.DnaService
 import org.springframework.http.ResponseEntity;
+import com.justo.mutant.scala.configuration.log.log
 
 @RestController
 class StatsController {

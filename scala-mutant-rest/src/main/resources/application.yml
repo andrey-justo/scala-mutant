@@ -14,11 +14,13 @@ endpoints:
         enabled: true
     health:
         enabled: true
-      
 
 spring:
     jmx:
         enabled: true
+    http:
+        converters:
+            preferred-json-mapper: jackson
     data:
         mongodb:
             uri: mongodb://andrey.justo:mutant_test@ds053126.mlab.com:53126/heroku_1fccdwbd

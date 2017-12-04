@@ -1,0 +1,61 @@
+<configuration>
+
+    <jmxConfigurator/>
+
+    <!-- LOGGER CONFIGURATIONS -->
+    <springProperty name="ENVIRONMENT" source="spring.profiles"/>
+
+    <property name="LOG_PATH" value="/justo-logs/mutant-api/"/>
+    <property name="PATTERN_DEFAULT" value="%highlight([%-5level]) %magenta([%date{ISO8601}] [%32.32X{stamp}] [%60.60(%class{40}->%method:%line)]) %msg%n"/>
+    <property name="PATTERN_EXCEPT"
+              value="%highlight([%-5level]) %magenta([%date{ISO8601}] [%32.32X{stamp}] [%60.60(%class{40}->%method:%line)]) [THREAD: %thread]%n%msg%n%xException{8}%n%n"/>
+    <property name="PATTERN_CORE" value="%highlight([%-5level]) %magenta([%date{ISO8601}] [%60.60(%class{40}->%method:%line)]) %msg%n"/>
+    <property name="DEFAULT_MAX_FILE_SIZE" value="100MB"/>
+    <property name="DEFAULT_MAX_HISTORY" value="100"/>
+    <property name="DEFAULT_ASYNC_QUEUE_SIZE" value="256"/>
+
+	<appender name="system" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${PATTERN_DEFAULT}</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="data_access" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${PATTERN_DEFAULT}</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="exceptions" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${PATTERN_DEFAULT}</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="core" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${PATTERN_DEFAULT}</pattern>
+		</layout>
+	</appender>
+
+    <root level="WARN">
+        <appender-ref ref="core"/>
+    </root>
+
+    <logger name="core" level="DEBUG" additivity="false">
+        <appender-ref ref="core"/>
+    </logger>
+
+    <logger name="data_access" level="DEBUG" additivity="false">
+        <appender-ref ref="data_access"/>
+    </logger>
+
+    <logger name="system" level="DEBUG" additivity="false">
+        <appender-ref ref="system"/>
+    </logger>
+
+    <logger name="exceptions" level="ALL" additivity="false">
+        <appender-ref ref="exceptions"/>
+    </logger>
+
+</configuration>
